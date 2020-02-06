@@ -32,6 +32,7 @@ public class OrderControllerIT {
 
     public static final String VISA = "VISA";
     public static final String MASTER_CARD = "MASTERCARD";
+    public static final String ICICI = "ICICI";
 
     @Test
     public void shouldApplyVISARule() throws Exception {
@@ -41,17 +42,8 @@ public class OrderControllerIT {
         order.setPrice(11000);
 
         //when
-        MockHttpServletRequestBuilder request = post("/order")
-                .content(objectMapper.writeValueAsBytes(order))
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .accept(MediaType.APPLICATION_JSON_VALUE);
-
-        String contentAsString = mockMvc.perform(request)
-                .andExpect(status().isOk())
-                .andReturn()
-                .getResponse()
-                .getContentAsString();
-
+        MockHttpServletRequestBuilder request = createPostOrder(order);
+        String contentAsString = performAction(request);
         Order resultOrder = objectMapper.readValue(contentAsString, Order.class);
 
         //then
@@ -61,30 +53,55 @@ public class OrderControllerIT {
     }
 
     @Test
-    public void shouldApplyMASTERCARDRuleRule() throws Exception {
+    public void shouldApplyMASTERCARDRule() throws Exception {
         //given
         Order order = new Order();
         order.setCardType(MASTER_CARD);
         order.setPrice(11000);
 
         //when
-        MockHttpServletRequestBuilder request = post("/order")
-                .content(objectMapper.writeValueAsBytes(order))
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .accept(MediaType.APPLICATION_JSON_VALUE);
-
-        String contentAsString = mockMvc.perform(request)
-                .andExpect(status().isOk())
-                .andReturn()
-                .getResponse()
-                .getContentAsString();
-
+        MockHttpServletRequestBuilder request = createPostOrder(order);
+        String contentAsString = performAction(request);
         Order resultOrder = objectMapper.readValue(contentAsString, Order.class);
 
         //then
         Assert.assertEquals(order.getCardType(), resultOrder.getCardType());
         Assert.assertEquals(order.getPrice(), resultOrder.getPrice());
         Assert.assertEquals(java.util.Optional.of(10).get(), resultOrder.getDiscount());
+    }
+
+    @Test
+    public void shouldApplyICICIRule() throws Exception {
+        //given
+        Order order = new Order();
+        order.setCardType(ICICI);
+        order.setPrice(11000);
+
+        //when
+        MockHttpServletRequestBuilder request = createPostOrder(order);
+        String contentAsString = performAction(request);
+        Order resultOrder = objectMapper.readValue(contentAsString, Order.class);
+
+        //then
+        Assert.assertEquals(order.getCardType(), resultOrder.getCardType());
+        Assert.assertEquals(order.getPrice(), resultOrder.getPrice());
+        Assert.assertEquals(java.util.Optional.of(20).get(), resultOrder.getDiscount());
+    }
+
+    private MockHttpServletRequestBuilder createPostOrder(Order order) throws JsonProcessingException {
+        return post("/order")
+                .content(objectMapper.writeValueAsBytes(order))
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE);
+
+    }
+
+    private String performAction(MockHttpServletRequestBuilder request) throws Exception {
+        return mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
     }
 
 }

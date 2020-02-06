@@ -50,7 +50,7 @@ public class DroolsConfig {
 
     private KieFileSystem getKieFileSystem() throws IOException {
         KieFileSystem kieFileSystem = kieServices.newKieFileSystem();
-        kieFileSystem.write(ResourceFactory.newClassPathResource("order.drl"));
+        kieFileSystem.write(ResourceFactory.newClassPathResource("order.xls"));
         return kieFileSystem;
     }
 }

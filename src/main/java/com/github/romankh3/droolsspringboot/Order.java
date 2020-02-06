@@ -5,7 +5,7 @@ public class Order {
 
     private String name;
     private String cardType;
-    private Integer discount;
+    private int discount;
     private Integer price;
 
 
