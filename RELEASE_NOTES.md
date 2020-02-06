@@ -1,2 +1,2 @@
 ## 1.0-SNAPSHOT
-*   Created template for new repositories.
+*   added sample of the drools engine work.
