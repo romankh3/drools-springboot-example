@@ -40,4 +40,14 @@ public class Order {
     public void setPrice(Integer price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "name='" + name + '\'' +
+                ", cardType='" + cardType + '\'' +
+                ", discount=" + discount +
+                ", price=" + price +
+                '}';
+    }
 }

@@ -4,13 +4,16 @@ import com.github.romankh3.droolsspringboot.Order;
 import com.github.romankh3.droolsspringboot.OutputDisplay;
 
 global OutputDisplay showResults;
+global OutputDisplay sh;
 
 rule "MASTERCARD"
     when
         orderObject : Order(cardType == "MASTERCARD" && price > 10000);
     then
         orderObject.setDiscount(10);
-        showResults.showText("MASTERCARD has been added a discount");
+        showResults.showText("showResults MASTERCARD has been added a discount");
+        sh.showText("sh MASTERCARD has been added a discount");
+
 end;
 
 rule "VISA"
@@ -18,13 +21,15 @@ rule "VISA"
         orderObject : Order(cardType == "VISA" && price > 5000);
     then
         orderObject.setDiscount(14);
-        showResults.showText("VISA has been added a discount");
+        showResults.showText("showResults VISA has been added a discount");
+        sh.showText("sh VISA has been added a discount");
 end;
 
 rule "ICICI"
     when
         orderObject : Order(cardType == "ICICI" && price > 3000);
     then
+        sh.showText("sh ICICI has been added a discount");
         orderObject.setDiscount(20);
-        showResults.showText("ICICI has been added a discount");
+        showResults.showText("showResults ICICI has been added a discount");
 end;

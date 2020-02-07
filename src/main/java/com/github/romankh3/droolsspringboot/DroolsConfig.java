@@ -7,6 +7,10 @@ import org.kie.api.builder.KieFileSystem;
 import org.kie.api.builder.KieModule;
 import org.kie.api.builder.KieRepository;
 import org.kie.api.builder.ReleaseId;
+import org.kie.api.event.rule.ObjectDeletedEvent;
+import org.kie.api.event.rule.ObjectInsertedEvent;
+import org.kie.api.event.rule.ObjectUpdatedEvent;
+import org.kie.api.event.rule.RuleRuntimeEventListener;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.kie.internal.io.ResourceFactory;
@@ -27,6 +31,28 @@ public class DroolsConfig {
         LOGGER.info("Session created...");
         KieSession kieSession = getKieContainer().newKieSession();
         kieSession.setGlobal("showResults", new OutputDisplay());
+        kieSession.setGlobal("sh", new OutputDisplay());
+
+        kieSession.addEventListener(new RuleRuntimeEventListener() {
+            @Override
+            public void objectInserted(ObjectInsertedEvent event) {
+                System.out.println("Object inserted \n "
+                        + event.getObject().toString());
+            }
+
+            @Override
+            public void objectUpdated(ObjectUpdatedEvent event) {
+                System.out.println("Object was updated \n"
+                        + "New Content \n"
+                        + event.getObject().toString());
+            }
+
+            @Override
+            public void objectDeleted(ObjectDeletedEvent event) {
+                System.out.println("Object retracted \n"
+                        + event.getOldObject().toString());
+            }
+        });
         return kieSession;
     }
 
