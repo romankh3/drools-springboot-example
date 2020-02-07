@@ -25,7 +25,9 @@ public class DroolsConfig {
     @Bean
     public KieSession getKieSession() throws IOException {
         LOGGER.info("Session created...");
-        return getKieContainer().newKieSession();
+        KieSession kieSession = getKieContainer().newKieSession();
+        kieSession.setGlobal("showResults", new OutputDisplay());
+        return kieSession;
     }
 
     @Bean
@@ -50,7 +52,7 @@ public class DroolsConfig {
 
     private KieFileSystem getKieFileSystem() throws IOException {
         KieFileSystem kieFileSystem = kieServices.newKieFileSystem();
-        kieFileSystem.write(ResourceFactory.newClassPathResource("order.xls"));
+        kieFileSystem.write(ResourceFactory.newClassPathResource("order.drl"));
         return kieFileSystem;
     }
 }
