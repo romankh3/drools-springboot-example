@@ -1,26 +1,23 @@
 package com.github.romankh3.droolsspringboot;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Integration-level testing for {@link OrderController} object.
  * Show the result of the Drools engine.
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class OrderControllerIT {
@@ -47,9 +44,9 @@ public class OrderControllerIT {
         Order resultOrder = objectMapper.readValue(contentAsString, Order.class);
 
         //then
-        Assert.assertEquals(order.getCardType(), resultOrder.getCardType());
-        Assert.assertEquals(order.getPrice(), resultOrder.getPrice());
-        Assert.assertEquals(java.util.Optional.of(14).get(), resultOrder.getDiscount());
+        assertEquals(order.getCardType(), resultOrder.getCardType());
+        assertEquals(order.getPrice(), resultOrder.getPrice());
+        assertEquals(14, resultOrder.getDiscount());
     }
 
     @Test
@@ -65,9 +62,9 @@ public class OrderControllerIT {
         Order resultOrder = objectMapper.readValue(contentAsString, Order.class);
 
         //then
-        Assert.assertEquals(order.getCardType(), resultOrder.getCardType());
-        Assert.assertEquals(order.getPrice(), resultOrder.getPrice());
-        Assert.assertEquals(java.util.Optional.of(10).get(), resultOrder.getDiscount());
+        assertEquals(order.getCardType(), resultOrder.getCardType());
+        assertEquals(order.getPrice(), resultOrder.getPrice());
+        assertEquals(10, resultOrder.getDiscount());
     }
 
     @Test
@@ -83,9 +80,9 @@ public class OrderControllerIT {
         Order resultOrder = objectMapper.readValue(contentAsString, Order.class);
 
         //then
-        Assert.assertEquals(order.getCardType(), resultOrder.getCardType());
-        Assert.assertEquals(order.getPrice(), resultOrder.getPrice());
-        Assert.assertEquals(java.util.Optional.of(20).get(), resultOrder.getDiscount());
+        assertEquals(order.getCardType(), resultOrder.getCardType());
+        assertEquals(order.getPrice(), resultOrder.getPrice());
+        assertEquals(20, resultOrder.getDiscount());
     }
 
     private MockHttpServletRequestBuilder createPostOrder(Order order) throws JsonProcessingException {

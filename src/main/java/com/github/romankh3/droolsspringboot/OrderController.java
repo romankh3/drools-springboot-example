@@ -1,7 +1,6 @@
 package com.github.romankh3.droolsspringboot;
 
 import org.kie.api.runtime.KieSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,8 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class OrderController {
 
-    @Autowired
-    private KieSession kieSession;
+    private final KieSession kieSession;
+
+    public OrderController(KieSession kieSession) {
+        this.kieSession = kieSession;
+    }
 
     @PostMapping("/order")
     public Order processRules(@RequestBody Order order) {

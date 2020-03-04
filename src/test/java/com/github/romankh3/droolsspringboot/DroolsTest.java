@@ -1,18 +1,15 @@
 package com.github.romankh3.droolsspringboot;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Integration-level testing for Drools rules.
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class DroolsTest {
 
@@ -31,7 +28,7 @@ public class DroolsTest {
         kieSession.fireAllRules();
 
         // then
-        assertEquals(java.util.Optional.of(14).get(), order.getDiscount());
+        assertEquals(14, order.getDiscount());
     }
 
     @Test
@@ -46,7 +43,7 @@ public class DroolsTest {
         kieSession.fireAllRules();
 
         // then
-        assertEquals(java.util.Optional.of(10).get(), order.getDiscount());
+        assertEquals(10, order.getDiscount());
     }
 
     @Test
@@ -61,6 +58,6 @@ public class DroolsTest {
         kieSession.fireAllRules();
 
         // then
-        assertEquals(java.util.Optional.of(20).get(), order.getDiscount());
+        assertEquals(20, order.getDiscount());
     }
 }
