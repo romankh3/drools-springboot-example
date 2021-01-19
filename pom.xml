@@ -16,7 +16,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <drools.version>7.45.0.t20201014</drools.version>
+        <drools.version>7.49.0.t20210118</drools.version>
     </properties>
 
     <dependencies>
